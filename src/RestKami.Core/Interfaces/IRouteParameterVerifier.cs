@@ -4,6 +4,6 @@ namespace RestKami.Core.Interfaces
 {
     public interface IRouteParameterVerifier
     {
-        Task Verify(TestCase testCase);
+        Task Verify(RouteParameterTestCase testCase);
     }
 }

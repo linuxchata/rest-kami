@@ -2,7 +2,7 @@
 {
     public interface IStringSeedDataGenerator
     {
-        string[] GenerateDefaultString(uint count = 100);
+        string[] GenerateDefaultStrings(uint count = 100);
 
         string[] GenerateLongString();
 

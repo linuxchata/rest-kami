@@ -9,7 +9,7 @@ namespace RestKami.Core
     {
         public List<List<string>> Permutate(IEnumerable<string[]> sequences)
         {
-            var result =  CartesianProduct(sequences);
+            var result = this.CartesianProduct(sequences);
 
             return result.Select(a => a.ToList()).ToList();
         }
@@ -22,8 +22,7 @@ namespace RestKami.Core
                 (accumulator, sequence) =>
                     from accumulatorItem in accumulator
                     from item in sequence
-                    select accumulatorItem.Concat(new[] { item })
-            );
+                    select accumulatorItem.Concat(new[] { item }));
         }
     }
 }

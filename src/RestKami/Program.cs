@@ -31,11 +31,12 @@ namespace RestKami
             {
                 var seedDataGenerator = scope.Resolve<IStringSeedDataGenerator>();
 
-                var testCaseBuilder = new TestCaseBuilder();
+                var testCaseBuilder = new RouteParameterTestCaseBuilder();
                 var testCase = testCaseBuilder
                     .VerifiableUrl("http://localhost:8000/weatherforecast/[param1]/[param2]")
-                    .WithSeed(seedDataGenerator.GenerateDefaultString(), forParam: "param1")
-                    .WithSeed(seedDataGenerator.GenerateDefaultString(), forParam: "param2")
+                    .WithRouterParameter("param1", seedDataGenerator.GenerateDefaultStrings())
+                    .WithRouterParameter("param2", seedDataGenerator.GenerateDefaultStrings())
+                    .WithHeader("X-Header", "Test")
                     .ShouldReturnStatusCode(200)
                     .Build();
 

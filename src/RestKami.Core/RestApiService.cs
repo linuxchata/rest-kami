@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -11,14 +12,18 @@ namespace RestKami.Core
 {
     public class RestApiService : IRestApiService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
 
         public RestApiService(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<RestApiService>();
+            this.logger = loggerFactory.CreateLogger<RestApiService>();
         }
 
-        public async Task<Result> Get(string baseUrl, int expectedStatusCode = 200, uint timeoutInMilliseconds = 1000)
+        public async Task<Result> Get(
+            string baseUrl,
+            Dictionary<string, string> headers,
+            int expectedStatusCode = 200,
+            uint timeoutInMilliseconds = 1000)
         {
             if (string.IsNullOrEmpty(baseUrl))
             {
@@ -34,6 +39,11 @@ namespace RestKami.Core
                     Timeout = TimeSpan.FromMilliseconds(timeoutInMilliseconds)
                 };
 
+                foreach (var header in headers)
+                {
+                    client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
+
                 var response = await client.GetAsync(baseUrl);
 
                 int resultStatusCode = (int)response.StatusCode;
@@ -41,12 +51,12 @@ namespace RestKami.Core
                 if (resultStatusCode == expectedStatusCode)
                 {
                     result.SetResult(true, resultStatusCode);
-                    _logger.LogDebug("URL {baseUrl} has been successfully requested", baseUrl);
+                    this.logger.LogDebug("URL {baseUrl} has been successfully requested", baseUrl);
                 }
                 else
                 {
                     result.SetResult(false, resultStatusCode);
-                    _logger.LogWarning(
+                    this.logger.LogWarning(
                         "Unexpected status code {resultStatusCode} while requesting URL {baseUrl}",
                         resultStatusCode,
                         baseUrl);
@@ -55,7 +65,7 @@ namespace RestKami.Core
             catch (Exception e)
             {
                 result.SetError(e.Message);
-                _logger.LogError(e, "Error requesting URL {baseUrl}", baseUrl);
+                this.logger.LogError(e, "Error requesting URL {baseUrl}", baseUrl);
             }
 
             return result;

@@ -13,7 +13,7 @@ namespace RestKami.Core
 
         private const int LongStringStep = 50;
 
-        public string[] GenerateDefaultString(uint count = 100)
+        public string[] GenerateDefaultStrings(uint count = 100)
         {
             if (count > MaxDefaultStringCount)
             {
@@ -24,7 +24,7 @@ namespace RestKami.Core
 
             for (int i = 0; i < count; i++)
             {
-                result[i] = GenerateDefaultStringInternal();
+                result[i] = this.GenerateDefaultStringInternal();
             }
 
             return result;
@@ -52,8 +52,8 @@ namespace RestKami.Core
             {
                 "null",
                 "NULL",
-                GenerateDefaultStringInternal() + " ",
-                " " + GenerateDefaultStringInternal()
+                this.GenerateDefaultStringInternal() + " ",
+                " " + this.GenerateDefaultStringInternal()
             };
         }
 
@@ -67,7 +67,7 @@ namespace RestKami.Core
 
             return chars
                 .Where(a => !char.IsControl(a))
-                .Select(a => GenerateDefaultStringInternal() + a)
+                .Select(a => this.GenerateDefaultStringInternal() + a)
                 .ToArray();
         }
 
