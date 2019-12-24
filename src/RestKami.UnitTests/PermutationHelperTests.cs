@@ -9,7 +9,7 @@ namespace RestKami.UnitTests
     [TestFixture]
     public class PermutationHelperTests
     {
-        private readonly PermutationHelper _sut = new PermutationHelper();
+        private readonly PermutationHelper sut = new PermutationHelper();
 
         [Test]
         public void Test()
@@ -36,7 +36,7 @@ namespace RestKami.UnitTests
             };
 
             //Act
-            var result = _sut.Permutate(source);
+            var result = this.sut.Permutate(source);
 
             //Assert
             Assert.That(result.Count, Is.EqualTo(12));

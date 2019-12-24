@@ -7,13 +7,13 @@ namespace RestKami.UnitTests
     [TestFixture]
     public class StringGeneratorTests
     {
-        private readonly StringSeedDataGenerator _sut = new StringSeedDataGenerator();
+        private readonly StringSeedDataGenerator sut = new StringSeedDataGenerator();
 
         [Test]
         public void Test1()
         {
             //Act
-            string[] result = _sut.GenerateStringWithEscapeCharacters();
+            var result = this.sut.GenerateStringWithEscapeCharacters();
 
             //Assert
             Assert.That(result, Is.Not.Empty);
@@ -23,7 +23,7 @@ namespace RestKami.UnitTests
         public void Test2()
         {
             //Act
-            string[] result = _sut.GenerateLongString();
+            var result = this.sut.GenerateLongString();
 
             //Assert
             Assert.That(result, Is.Not.Empty);
